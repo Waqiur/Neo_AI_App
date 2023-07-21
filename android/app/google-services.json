@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "475313564724",
+    "project_id": "neoaiapp-e0686",
+    "storage_bucket": "neoaiapp-e0686.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475313564724:android:d3c09bf53e359dfb9bae61",
+        "android_client_info": {
+          "package_name": "com.example.neo_ai_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475313564724-c2d788rl7j5puo4gcbmjk9is9d0a2ojt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.neo_ai_app",
+            "certificate_hash": "0f0030da765cb21c2db25298beae0619979d9a8c"
+          }
+        },
+        {
+          "client_id": "475313564724-5tghp8brcdtm8qgu6v7ts0dsvjubj3f5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAExSyS_7W_-BWKKyTuyC_Q59Ifnpl9oj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475313564724-5tghp8brcdtm8qgu6v7ts0dsvjubj3f5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "475313564724-alq324so696to5m047ap60vjaj0fba3t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.neoAiApp.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

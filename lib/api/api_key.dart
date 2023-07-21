@@ -1,0 +1,5 @@
+const openAIApiKey = "";
+const stripeAPIKey =
+    "";
+
+
