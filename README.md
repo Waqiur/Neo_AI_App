@@ -3,15 +3,16 @@
 Neo AI App is a fantastic app that utilizes OpenAI to offer a range of useful features. It allows you to create custom images, easily translate text, generate accurate audio transcripts and many more features. With its user-friendly design and powerful capabilities, it brings the convenience of AI tools right to your fingertips.
 
 ## Screenshot
+
 <p align="center">
-<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/a5c15f0f-4611-4caa-8a18-cdeefdf3de48" height="550" width="260">
-<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/9ac9ef2b-d5e9-4ae7-9904-b5806d6a95bb" height="550" width="260">
-<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/8135bae3-e969-49f6-9c63-145ee2acdc92" height="550" width="260">
+<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/39ed5542-1abf-4a8c-a9f9-e1d34e9d2cb8" height="550" width="260">
+<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/0e945fab-83f8-4deb-be1e-f1fa502d0247" height="550" width="260">
+<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/fc0b9ca2-6cca-435b-9bbf-99fd7a3c2fd2" height="550" width="260">
 </p>
 <p align="center">
-<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/e003e4e6-9d29-4174-9778-8bd6192aaa0d" height="550" width="260">
-<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/0fa3951f-76f5-4e6d-baf3-97ddf98b107f" height="550" width="260">
-<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/6d816c2d-ec8c-44f6-883d-71f19f234837" height="550" width="260">
+<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/e12ebb60-5b12-4061-a574-cc74da1d7def" height="550" width="260">
+<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/1129a579-ab4b-44a3-885f-14e93ec2b300" height="550" width="260">
+<img src="https://github.com/Waqiur/Neo_AI_App/assets/102824000/911a6a8f-d21f-4dc9-8b06-c0112f1bd16f" height="550" width="260">
 </p>
 
 ## Features
