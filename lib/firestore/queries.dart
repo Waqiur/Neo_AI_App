@@ -14,7 +14,7 @@ class AddData extends GetxController {
         .where("Email", isEqualTo: user.email)
         .get();
     if (querySnapshot.size == 0) {
-      FirebaseFirestore.instance.collection("User").add(user.toJson());
+      await FirebaseFirestore.instance.collection("User").add(user.toJson());
       _credits.value = 50;
     } else {
       _credits.value = querySnapshot.docs[0].get("Credits").toInt();

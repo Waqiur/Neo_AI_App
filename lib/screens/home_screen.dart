@@ -30,13 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
-    getCredits();
-  }
-
-  getCredits() {
     Get.find<AddData>().addUserData(UserModel(
         email: FirebaseAuth.instance.currentUser!.email, credits: 50));
   }
+
 
   @override
   Widget build(BuildContext context) {
