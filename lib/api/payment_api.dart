@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:neo_ai_app/api/api_key.dart';
 
 import '../const/constants.dart';
+import '../firestore/queries.dart';
 
 class Payment {
   String url = 'https://api.stripe.com/v1/payment_intents';
@@ -49,11 +52,13 @@ class Payment {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
         Stripe.instance.confirmPaymentSheetPayment();
+        Get.find<AddData>()
+            .updateUserData(FirebaseAuth.instance.currentUser!.email!, true);
         showDialog(
             context: context,
-            builder: (context) {
+            builder: (dialogContext) {
               Future.delayed(const Duration(seconds: 3), () {
-                Navigator.of(context).pop(true);
+                Navigator.of(dialogContext).pop(true);
               });
               return const AlertDialog(
                 backgroundColor: DarkModeColors.cardColor,

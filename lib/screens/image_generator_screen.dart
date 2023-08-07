@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../const/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +13,9 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../api/api_key.dart';
+import '../firestore/queries.dart';
 import '../widgets/Button.dart';
+import '../widgets/credit_alert_dialog.dart';
 
 class ImageGeneratorScreen extends StatefulWidget {
   const ImageGeneratorScreen({super.key});
@@ -55,10 +60,19 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen>
   }
 
   void generateImage() async {
+    int credits = Get.find<AddData>().getCreditValue.value;
+    if (credits == 0) {
+      showSpinner = false;
+      isSent = false;
+      CreditAlertDialog().checkCredits(context, "Not Enough Credits");
+      return;
+    }
     final request = GenerateImage(controller.text, 1,
         size: ImageSize.size1024, responseFormat: Format.url);
     final response = await openAI?.generateImage(request);
     receivedImageUrl = "${response?.data?.last?.url}";
+    Get.find<AddData>()
+        .updateUserData(FirebaseAuth.instance.currentUser!.email!, false);
     setState(() {
       showSpinner = false;
       isSent = true;

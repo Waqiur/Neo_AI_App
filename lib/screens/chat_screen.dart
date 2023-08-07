@@ -1,10 +1,16 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:neo_ai_app/widgets/credit_alert_dialog.dart';
+
 import '../const/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 import '../api/api_key.dart';
+import '../firestore/queries.dart';
 import '../widgets/chat_message.dart';
 import '../widgets/dot_animation.dart';
 
@@ -39,7 +45,12 @@ class _ChatScreenState extends State<ChatScreen> {
     subscription?.cancel();
   }
 
-  void sendMessage() {
+  Future<void> sendMessage() async {
+    int credits = Get.find<AddData>().getCreditValue.value;
+    if (credits == 0) {
+      CreditAlertDialog().checkCredits(context, "Not Enough Credits");
+      return;
+    }
     if (controller.text == "") {
       return;
     }
@@ -67,6 +78,8 @@ class _ChatScreenState extends State<ChatScreen> {
       text: response!.choices[0].message!.content,
       isMe: false,
     );
+    Get.find<AddData>()
+        .updateUserData(FirebaseAuth.instance.currentUser!.email!, false);
     setState(() {
       isTyping = false;
       chatMessages.insert(0, receivedMessage);

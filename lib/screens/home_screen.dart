@@ -1,11 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:neo_ai_app/api/payment_api.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:neo_ai_app/firestore/queries.dart';
+import 'package:neo_ai_app/widgets/credit_alert_dialog.dart';
 import '../const/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 
-import '../widgets/Button.dart';
+import '../firestore/user_model.dart';
 import '../widgets/cards.dart';
 import '../widgets/main_screen_circle_widget.dart';
 import 'audio_transcribe_screen.dart';
@@ -22,6 +25,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final controller = Get.put(AddData());
+
+  @override
+  initState() {
+    super.initState();
+    getCredits();
+  }
+
+  getCredits() {
+    Get.find<AddData>().addUserData(UserModel(
+        email: FirebaseAuth.instance.currentUser!.email, credits: 50));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,44 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(top: 10.0, right: 20),
             child: GestureDetector(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    backgroundColor: DarkModeColors.backgroundColor,
-                    title: Text(
-                      'Buy Premium',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    content: Container(
-                      height: 130,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Remaining Credits : 50',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Button(
-                            icon: Icons.credit_score,
-                            onPressed: () {
-                              Payment().makePayment(context);
-                            },
-                            text: "Buy more Credits",
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                CreditAlertDialog().checkCredits(context, "Buy Premium");
               },
               child: Icon(
                 Icons.diamond,

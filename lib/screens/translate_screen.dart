@@ -1,9 +1,15 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import '../const/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../api/api_key.dart';
+import '../firestore/queries.dart';
+import '../widgets/credit_alert_dialog.dart';
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -51,6 +57,14 @@ class _TranslateScreenState extends State<TranslateScreen>
   }
 
   void sendPrompt() async {
+    int credits = Get.find<AddData>().getCreditValue.value;
+    if (credits == 0) {
+      showSpinnerContainer = false;
+      responseContainer = false;
+      showDefaultContainer = true;
+      CreditAlertDialog().checkCredits(context, "Not Enough Credits");
+      return;
+    }
     if (selectedLanguage1 == selectedLanguage2) {
       answerController.value = TextEditingValue(
         text: controller.text,
@@ -82,6 +96,8 @@ class _TranslateScreenState extends State<TranslateScreen>
         TextPosition(offset: response.choices[0].message!.content.length),
       ),
     );
+    Get.find<AddData>()
+        .updateUserData(FirebaseAuth.instance.currentUser!.email!, false);
     setState(() {
       showSpinnerContainer = false;
       responseContainer = true;
@@ -161,7 +177,8 @@ class _TranslateScreenState extends State<TranslateScreen>
           children: [
             if (showDefaultContainer)
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 height: MediaQuery.of(context).size.height * 0.42,
                 width: 396.8,
                 decoration: BoxDecoration(
@@ -194,7 +211,8 @@ class _TranslateScreenState extends State<TranslateScreen>
               )
             else if (showSpinnerContainer)
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 height: MediaQuery.of(context).size.height * 0.42,
                 width: 396.8,
                 decoration: BoxDecoration(
@@ -210,7 +228,8 @@ class _TranslateScreenState extends State<TranslateScreen>
             else if (responseContainer)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 height: MediaQuery.of(context).size.height * 0.42,
                 width: 396.8,
                 decoration: BoxDecoration(

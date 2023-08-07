@@ -1,14 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import '../api/api_key.dart';
 import '../const/constants.dart';
+import '../firestore/queries.dart';
 import '../widgets/Button.dart';
+import '../widgets/credit_alert_dialog.dart';
 
 class AudioTranscribeScreen extends StatefulWidget {
   const AudioTranscribeScreen({super.key});
@@ -27,8 +32,6 @@ class _AudioTranscribeScreenState extends State<AudioTranscribeScreen>
   bool showSpinnerContainer = false;
   bool responseContainer = false;
   bool showDefaultContainer = true;
-  bool showSpinner = true;
-  bool isSent = false;
   bool fileSelected = false;
   String fileName = "";
   String filePath = "";
@@ -57,6 +60,14 @@ class _AudioTranscribeScreenState extends State<AudioTranscribeScreen>
   }
 
   void audioTranscribe() async {
+    int credits = Get.find<AddData>().getCreditValue.value;
+    if (credits == 0) {
+      showSpinnerContainer = false;
+      responseContainer = false;
+      showDefaultContainer = true;
+      CreditAlertDialog().checkCredits(context, "Not Enough Credits");
+      return;
+    }
     var url = Uri.https("api.openai.com", "v1/audio/transcriptions");
     var request = http.MultipartRequest('POST', url);
     request.headers.addAll(({"Authorization": "Bearer $openAIApiKey"}));
@@ -72,6 +83,8 @@ class _AudioTranscribeScreenState extends State<AudioTranscribeScreen>
         TextPosition(offset: responseData['text'].length),
       ),
     );
+    Get.find<AddData>()
+        .updateUserData(FirebaseAuth.instance.currentUser!.email!, false);
     if (fileSelected == true) {
       setState(() {
         showSpinnerContainer = false;
@@ -122,7 +135,6 @@ class _AudioTranscribeScreenState extends State<AudioTranscribeScreen>
               showDefaultContainer = false;
             });
             audioTranscribe();
-            isSent = true;
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,

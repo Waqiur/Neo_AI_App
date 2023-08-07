@@ -53,6 +53,8 @@ dependencies:
   firebase_auth: ^4.6.3
   shared_preferences: ^2.2.0
   flutter_stripe: ^9.3.0
+  cloud_firestore: ^4.8.4
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

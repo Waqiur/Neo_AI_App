@@ -1,11 +1,17 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import '../const/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../api/api_key.dart';
+import '../firestore/queries.dart';
 import '../widgets/Button.dart';
+import '../widgets/credit_alert_dialog.dart';
 
 class CodeGeneratorScreen extends StatefulWidget {
   const CodeGeneratorScreen({super.key});
@@ -52,6 +58,13 @@ class _CodeGeneratorScreenState extends State<CodeGeneratorScreen>
   }
 
   void sendPrompt() async {
+    int credits = Get.find<AddData>().getCreditValue.value;
+    if (credits == 0) {
+      showSpinnerContainer = false;
+      showDefaultContainer = true;
+      CreditAlertDialog().checkCredits(context, "Not Enough Credits");
+      return;
+    }
     final request = ChatCompleteText(
       messages: [
         Messages(
@@ -72,6 +85,8 @@ class _CodeGeneratorScreenState extends State<CodeGeneratorScreen>
         TextPosition(offset: extractedText.length),
       ),
     );
+    Get.find<AddData>()
+        .updateUserData(FirebaseAuth.instance.currentUser!.email!, false);
     setState(() {
       showSpinnerContainer = false;
       responseContainer = true;
