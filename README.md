@@ -32,9 +32,9 @@ Neo AI App is a fantastic app that utilizes OpenAI to offer a range of useful fe
 To run the Neo AI App project, follow these stesp:
 1. Clone the repository.
 2. Open the project in your preferred IDE or code editor.
-3. Ensure you have Flutter SDK installed.
+3. Ensure you have the Flutter SDK installed.
 4. Run flutter pub get to fetch the project dependencies.
-5. Generate new API key from Open AI and put your API key in the lib/api
+5. Generate a new API key from Open AI and put your API key in the lib/api
    /api_key.dart
 6. Connect a device or start an emulator/simulator.
 7. Run flutter run to launch the application.
