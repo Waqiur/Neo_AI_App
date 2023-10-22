@@ -25,7 +25,7 @@ Neo AI App is a fantastic app that utilizes OpenAI to offer a range of useful fe
 ## Technologies Used
 - Flutter SDK
 - Dart Programming Language
-- Andriod Studio
+- Android Studio
 - Open AI APIs
 
 ## Getting Started
