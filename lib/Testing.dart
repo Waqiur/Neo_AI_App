@@ -1,12 +1,39 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-int add(int a, int b) {
-  return a + b;
+// Define a simple StatelessWidget
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: () {
+            // Handle the button press event here
+          },
+          child: Text('Press Me'),
+        ),
+        Text('Button not pressed yet'),
+      ],
+    );
+  }
 }
 
 void main() {
-  test('Test addition function', () {
-    expect(add(2, 3), 5); // Expect the result to be 5 when adding 2 and 3.
-    expect(add(-1, 1), 0); // Expect the result to be 0 when adding -1 and 1.
+  testWidgets('Widget test', (WidgetTester tester) async {
+    // Build our widget
+    await tester.pumpWidget(MyWidget());
+
+    // Verify that the initial text is displayed
+    expect(find.text('Button not pressed yet'), findsOneWidget);
+
+    // Tap the button
+    await tester.tap(find.text('Press Me'));
+
+    // Rebuild the widget
+    await tester.pump();
+
+    // Verify that the text has changed after pressing the button
+    expect(find.text('Button not pressed yet'), findsNothing);
   });
 }
